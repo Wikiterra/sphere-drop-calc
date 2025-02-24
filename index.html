@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Drop/Ocultación en una esfera</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <h1>Calculadora de Drop/Ocultación en una esfera</h1>
+
+    <label for="method-select">Seleccione un método:</label>
+    <select id="method-select">
+        <option value="pythagoras">Teorema de Pitágoras</option>
+        <option value="perimeter">Perímetro de un círculo</option>
+        <option value="trigonometry">Trigonometría</option>
+    </select>
+
+    <div class="method pythagoras-method">
+        <h2 id="teorema-de-pitagoras">Teorema de Pitágoras</h2>
+        <div class="formula">
+            <ul class="formula-list">
+                <li id="formula-pythagoras-1"></li>
+                <li id="formula-pythagoras-2"></li>
+                <li id="formula-pythagoras-3"></li>
+                <li id="formula-pythagoras-4"></li>
+            </ul>
+        </div>
+
+        <form id="form-pythagoras">
+            <div class="row">
+                <label for="h0">Altura inicial (km)</label>
+                <input type="number" id="h0" min="0" max="12" step="0.1" required>
+            </div>
+            <div class="row">
+                <label for="d-pythagoras">Distancia total (km)</label>
+                <input type="number" id="d-pythagoras" step="10" required>
+            </div>
+            <input type="submit" value="Calcular">
+        </form>
+        <div class="result">
+            <div class="row">
+                <label for="h1-pythagoras">Altura oculta (km)</label>
+                <input type="text" id="h1-pythagoras" readonly>
+            </div>
+        </div>
+        <!-- TODO: añadir imágen -->
+         <img src="./img/shpere-drop-pythagoras.png" alt="shpere-drop-pythagoras">
+    </div>
+
+    <div class="method perimeter-method">
+        <h2 id="perimetro-circulo">Perímetro de un círculo</h2>
+        <div class="formula">
+            <ul class="formula-list">
+                <li id="formula-perimeter-1"></li>
+                <li id="formula-perimeter-2"></li>
+                <li id="formula-perimeter-3"></li>
+            </ul>
+        </div>
+        <form id="form-perimeter">
+            <div class="row">
+                <label for="d-perimeter">Distancia total (km)</label>
+                <input type="number" id="d-perimeter" required>
+            </div>
+            <input type="submit" value="Calcular">
+        </form>
+        <div class="result">
+            <div class="row">
+                <label for="h1-perimeter">Altura oculta (km)</label>
+                <input type="text" id="h1-perimeter" readonly>
+            </div>
+        </div>
+        <!-- TODO: añadir imágen -->
+        <img src="./img/shpere-drop-trigonometry.png" alt="shpere-drop-trigonometry">
+    </div>
+
+    <div class="method trigonometry-method">
+        <h2 id="trigonometria">Trigonometría</h2>
+        <div class="formula">
+            <ul class="formula-list">
+                <li id="formula-trigonometry-1"></li>
+                <li id="formula-trigonometry-2"></li>
+                <li id="formula-trigonometry-3"></li>
+            </ul>
+        </div>
+
+        <form id="form-trigonometry">
+            <div class="row">
+                <label for="d-trigonometry">Distancia total (km)</label>
+                <input type="number" id="d-trigonometry" required>
+            </div>
+            <input type="submit" value="Calcular">
+        </form>
+        <div class="result">
+            <div class="row">
+                <label for="h1-trigonometry">Altura oculta (km)</label>
+                <input type="text" id="h1-trigonometry" readonly>
+            </div>
+        </div>
+        <!-- TODO: añadir imágen -->
+    </div>
+
+    <div class="maximum-observable-distances">
+        <h2>Distancias Máximas Observables</h2>
+        <table class="table-max-observations">
+            <thead>
+                <tr>
+                    <th>Distancia entre lugares (A - B)</th>
+                    <th>Altura inicial (km)</th>
+                    <th>Altura observada (km)</th>
+                    <th>Distancia observada (km)</th>
+                    <th>Altura de ocultación (km)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lanzarote (Uga) - Tenerife (Teide)</td>
+                    <td>0.4</td>
+                    <td>0.4</td>
+                    <td>300</td>
+                    <td>4.2</td>
+                </tr>
+                <tr>
+                    <td>Barcelona - Mallorca</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>200</td>
+                    <td>3.5</td>
+                </tr>
+                <tr>
+                    <td>Valencia - Ibiza</td>
+                    <td>0.3</td>
+                    <td>0.3</td>
+                    <td>150</td>
+                    <td>2.8</td>
+                </tr>
+                <tr>
+                    <td>Madrid - Toledo</td>
+                    <td>0.2</td>
+                    <td>0.2</td>
+                    <td>100</td>
+                    <td>1.5</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="references">
+        <h2>Referencias</h2>
+        <ul>
+            <li>
+                <a href="http://walter.bislins.ch/bloge/index.asp?page=Advanced+Earth+Curvature+Calculator"
+                    target="_blank">
+                    Calculadora avanzada de curvatura terrestre - WisBis
+                </a>
+            </li>
+            <li>
+                <a href="https://dizzib.github.io/earth/curve-calc/?d0=31&h0=10&unit=metric" target="_blank">
+                    Calculadora de curvatura terrestre - Dizzlib</a>
+            </li>
+            <li>
+                <a href="https://www.udeuschle.de/panoramas/makepanoramas_en.htm" target="_blank">Mostrar Panorama</a>
+            </li>
+            <li>
+                <a href="https://www.desmos.com/calculator/4curh1y6r3">Representación en 2D de esfera - Desmos</a>
+            </li>
+            <li>
+                <a href="https://www.geogebra.org/3d/xevcszzh">Representación en 3D de esfera - Geogebra</a>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
