@@ -9,6 +9,12 @@ body {
     display: none;
 }
 
+.method form {
+    padding: 1em;
+    width: 20em;
+    border: 1px solid black;
+}
+
 form,
 .result {
     margin-bottom: 20px;
@@ -16,12 +22,8 @@ form,
 
 .row {
     display: flex;
-    flex-direction: column;
     margin-bottom: 10px;
-}
-
-label {
-    margin-bottom: 5px;
+    gap: 15px;
 }
 
 input[type="number"],
@@ -38,6 +40,7 @@ input[type="submit"] {
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 2em;
 }
 
 input[type="submit"]:hover {

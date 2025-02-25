@@ -7,8 +7,12 @@ const R = 6371; // Radius of the Earth in km
  * @returns {object} - Object containing the calculated drop (h1) rounded to three decimal places.
  */
 function calcDropThPythagoras(h0, d) {
-    const d1 = Math.sqrt(h0 ** 2 + (2 * R * h0));
-    const h1 = Math.sqrt((d - d1) ** 2 + R ** 2) - R;
+    const d1 = Math.sqrt(h0**2 + 2 * R * h0);
+    
+    if (d <= d1) {
+        return { h1: 0 }; // Target is still visible above horizon
+    }
+    const h1 = Math.sqrt(d ** 2 + R ** 2) - R - h0;
     return { h1: h1.toFixed(3) };
 }
 
