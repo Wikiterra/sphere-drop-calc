@@ -1,4 +1,80 @@
-const R = 6371; // Radius of the Earth in km
+const R = 6371; // Radius of the spherical Earth in km
+
+
+function showMethod(method) {
+    methods.forEach(m => m.style.display = 'none');
+    document.querySelector(`.${method}-method`).style.display = 'block';
+}
+
+function renderKatexEquations() {
+    // Method 1: Pythagoras
+    katex.render(`
+    \\text{\\textbf{Definiciones de variables:}}\\\\
+    d: \\text{Distancia observada}\\\\
+    d_1: \\text{Distancia hasta el horizonte geométrico}\\\\
+    d_2: \\text{Distancia desde el horizonte geométrico al objeto observado}\\\\
+    h_0: \\text{Altura del observador}\\\\
+    h_1: \\text{Altura oculta o drop de caída}\\\\
+    R: \\text{Radio terrestre}
+    `, document.getElementById('formula-variables'));
+
+    katex.render(`
+    (R + h_0)^2 = d_1^2 + R^2 \\Rightarrow d_1 = \\sqrt{h_0^2 + 2Rh_0}
+    `, document.getElementById('formula-pythagoras-1'));
+
+    katex.render(`
+    (R + h_1)^2 = d_2^2 + R^2 \\Rightarrow h_1 = \\sqrt{d_2^2 + R^2} - R
+    `, document.getElementById('formula-pythagoras-2'));
+
+    katex.render(`
+    d = d_0 - d_1 \\Rightarrow h_1 = \\sqrt{(d_0 - d_1)^2 + R^2} - R
+    `, document.getElementById('formula-pythagoras-3'));
+
+    // Method 2: Perimeter of a circle
+    katex.render(`
+    \\text{\\textbf{Definiciones de variables:}}\\\\
+    C: \\text{Circunferencia de la Tierra}\\\\
+    d: \\text{Distancia observada}\\\\
+    R: \\text{Radio terrestre}\\\\
+    \\alpha: \\text{Ángulo subtendido en radianes}\\\\
+    h_1: \\text{Altura oculta o drop de caída}
+    `, document.getElementById('formula-variables'));
+
+    katex.render(`
+    C = 2\\pi R
+    `, document.getElementById('formula-perimeter-1'));
+
+    katex.render(`
+    \\alpha = \\frac{d}{R}
+    `, document.getElementById('formula-perimeter-2'));
+
+    katex.render(`
+    h_1 = R(1 - \\cos(\\alpha))
+    `, document.getElementById('formula-perimeter-3'));
+
+    // Method 3: Trigonometry
+    katex.render(`
+    \\text{\\textbf{Definiciones de variables:}}\\\\
+    C: \\text{Circunferencia de la Tierra}\\\\
+    d: \\text{Distancia observada}\\\\
+    R: \\text{Radio terrestre}\\\\
+    \\alpha: \\text{Ángulo subtendido en radianes}\\\\
+    \\alpha_{km}: \\text{Conversión de ángulo por distancia en km}\\\\
+    h_1: \\text{Altura oculta o drop de caída}
+    `, document.getElementById('formula-variables'));
+
+    katex.render(`
+    C = 2\\pi R
+    `, document.getElementById('formula-trigonometry-1'));
+
+    katex.render(`
+    \\alpha = \\alpha_{km} \\cdot d
+    `, document.getElementById('formula-trigonometry-2'));
+
+    katex.render(`
+    h_1 = R(1 - \\cos(\\alpha)) \\Rightarrow h_1 = R \\left( \\frac{1}{\\cos\\left(\\frac{d}{R}\\right)} - 1 \\right)
+    `, document.getElementById('formula-trigonometry-3'));
+}
 
 /**
  * Calculates the drop in height using the Pythagorean theorem.
@@ -7,12 +83,12 @@ const R = 6371; // Radius of the Earth in km
  * @returns {object} - Object containing the calculated drop (h1) rounded to three decimal places.
  */
 function calcDropThPythagoras(h0, d) {
-    const d1 = Math.sqrt(h0**2 + 2 * R * h0);
-    
+    const d1 = Math.sqrt(h0 ** 2 + 2 * R * h0);
+
     if (d <= d1) {
         return { h1: 0 }; // Target is still visible above horizon
     }
-    const h1 = Math.sqrt(d ** 2 + R ** 2) - R - h0;
+    const h1 = Math.sqrt((d - d1) ** 2 + R ** 2) - R;
     return { h1: h1.toFixed(3) };
 }
 
@@ -38,30 +114,24 @@ function calcDropTrigonometry(d) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Rendering formulas using KaTeX
-    katex.render("d_2^2 + R^2 = (R + h_1)^2 \\Rightarrow h_1 = \\sqrt{d_2^2 - 2Rh_1}", document.getElementById('formula-pythagoras-1'));
-    katex.render("d_2=d - d_1", document.getElementById('formula-pythagoras-2'));
-    katex.render("h_1 = \\sqrt{(d - d_1)^2 + R^2} - R", document.getElementById('formula-pythagoras-3'));
-
-    katex.render("C = 2\\pi R", document.getElementById('formula-perimeter-1'));
-    katex.render("\\alpha = \\frac{d}{R} \\Rightarrow \\alpha = \\frac{2 \\pi d}{C}", document.getElementById('formula-perimeter-2'));
-    katex.render("h_1 = R(1 - \\cos(\\frac{2 \\pi d}{C}))", document.getElementById('formula-perimeter-3'));
-
-    katex.render("C = 2\\pi R", document.getElementById('formula-trigonometry-1'));
-    katex.render("\\alpha = \\alpha_{km} \\cdot d", document.getElementById('formula-trigonometry-2'));
-    katex.render("h_1 = R(1 - \\cos(\\alpha)) \\Rightarrow h_1 = R \\left( \\frac{1}{\\cos\\left(\\frac{d}{R}\\right)} - 1 \\right)", document.getElementById('formula-trigonometry-3'));
-
     const methodSelect = document.getElementById('method-select');
     const methods = document.querySelectorAll('.method');
+
+    renderKatexEquations();
 
     methodSelect.addEventListener('change', (event) => {
         methods.forEach(method => method.style.display = 'none');
         document.querySelector(`.${event.target.value}-method`).style.display = 'block';
     });
-
-    // Set default method to "Pythagoras"
     methodSelect.value = 'pythagoras';
     document.querySelector('.pythagoras-method').style.display = 'block';
+
+    methodButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const method = button.getAttribute('data-method');
+            showMethod(method);
+        });
+    });
 
     document.querySelector('#form-pythagoras').addEventListener('submit', (event) => {
         event.preventDefault();
