@@ -1,11 +1,5 @@
 const R = 6371; // Radius of the spherical Earth in km
 
-
-function showMethod(method) {
-    methods.forEach(m => m.style.display = 'none');
-    document.querySelector(`.${method}-method`).style.display = 'block';
-}
-
 function renderKatexEquations() {
     // Method 1: Pythagoras
     katex.render(`
@@ -74,6 +68,11 @@ function renderKatexEquations() {
     katex.render(`
     h_1 = R(1 - \\cos(\\alpha)) \\Rightarrow h_1 = R \\left( \\frac{1}{\\cos\\left(\\frac{d}{R}\\right)} - 1 \\right)
     `, document.getElementById('formula-trigonometry-3'));
+
+    katex.render(
+        String.raw`d = 113 \sqrt{h_0}`, 
+        document.getElementById('d-geometric-horizon-equation')
+    );
 }
 
 /**
@@ -114,24 +113,36 @@ function calcDropTrigonometry(d) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const methodSelect = document.getElementById('method-select');
+    const methodButtons = document.querySelectorAll('.list-methods button');
     const methods = document.querySelectorAll('.method');
+    
+    function showMethod(method) {
+        methods.forEach(m => m.style.display = 'none');
+        const selectedMethod = document.querySelector(`.${method}-method`);
+        if (selectedMethod) {
+            selectedMethod.style.display = 'block';
+        }
+    
+        // Remove active class from all buttons
+        methodButtons.forEach(button => button.classList.remove('active'));
+    
+        // Add active class to the clicked button
+        const activeButton = document.querySelector(`button[data-method="${method}"]`);
+        if (activeButton) {
+            activeButton.classList.add('active');
+        }
+    }
 
-    renderKatexEquations();
-
-    methodSelect.addEventListener('change', (event) => {
-        methods.forEach(method => method.style.display = 'none');
-        document.querySelector(`.${event.target.value}-method`).style.display = 'block';
-    });
-    methodSelect.value = 'pythagoras';
-    document.querySelector('.pythagoras-method').style.display = 'block';
-
+    // Show the Pythagoras method by default on first load
+    showMethod('pythagoras');
     methodButtons.forEach(button => {
         button.addEventListener('click', () => {
             const method = button.getAttribute('data-method');
             showMethod(method);
         });
     });
+
+    renderKatexEquations();
 
     document.querySelector('#form-pythagoras').addEventListener('submit', (event) => {
         event.preventDefault();

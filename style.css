@@ -4,6 +4,17 @@ body {
     line-height: 1.6;
 }
 
+.list-methods button {
+    width: 13rem;
+    height: 4rem;
+    margin-right: 10px;
+}
+
+.list-methods button.active {
+    background-color: #0056b3;
+    color: white;
+}
+
 .method {
     margin-bottom: 30px;
     display: none;

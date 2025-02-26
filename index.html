@@ -14,12 +14,11 @@
 <body>
     <h1>Calculadora de Drop/Ocultación en una esfera</h1>
 
-    <label for="method-select">Seleccione un método:</label>
-    <select id="method-select">
-        <option value="pythagoras">Teorema de Pitágoras</option>
-        <option value="perimeter">Perímetro de un círculo</option>
-        <option value="trigonometry">Trigonometría</option>
-    </select>
+    <div class="list-methods">
+        <button data-method="pythagoras">Método pitagórico</button>
+        <button data-method="perimeter">Método perímetro circunferencia</button>
+        <button data-method="trigonometry">Método trigonométrico</button>
+    </div>
 
     <div class="method pythagoras-method">
         <h2 id="teorema-de-pitagoras">Teorema de Pitágoras</h2>
@@ -50,8 +49,7 @@
                 <input type="text" id="h1-pythagoras" readonly>
             </div>
         </div>
-        <!-- TODO: añadir imágen -->
-         <img src="./img/shpere-drop-pythagoras.png" alt="shpere-drop-pythagoras">
+        <img src="./img/shpere-drop-calc.png" alt="shpere-drop-calc">
     </div>
 
     <div class="method perimeter-method">
@@ -77,8 +75,7 @@
                 <input type="text" id="h1-perimeter" readonly>
             </div>
         </div>
-        <!-- TODO: añadir imágen -->
-        <img src="./img/shpere-drop-trigonometry.png" alt="shpere-drop-trigonometry">
+        <img src="./img/shpere-drop-calc.png" alt="shpere-drop-calc">
     </div>
 
     <div class="method trigonometry-method">
@@ -105,7 +102,13 @@
                 <input type="text" id="h1-trigonometry" readonly>
             </div>
         </div>
-        <!-- TODO: añadir imágen -->
+        <img src="./img/shpere-drop-calc.png" alt="shpere-drop-calc">
+    </div>
+
+    <div class="extra">
+        <p>*La distancia al horizonte se puede calcular fácilmente en kilómetros como: 
+            <span id="d-geometric-horizon-equation"></span>
+        </p>
     </div>
 
     <div class="maximum-observable-distances">
